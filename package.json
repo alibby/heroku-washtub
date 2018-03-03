@@ -6,7 +6,6 @@
   "license": "MIT",
   "dependencies": {
     "co": "^4.6.0",
-    "heroku-cli-addons": "^1.2.26",
     "heroku-cli-util": "^8.0.0",
     "heroku-pg": "^2.9.0",
     "lodash": "^4.17.5",
