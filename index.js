@@ -1,8 +1,6 @@
-
 exports.commands = [
   require('./commands/washtub/dump')
 ]
-
 
 exports.topic = {
   name: 'washtub',
