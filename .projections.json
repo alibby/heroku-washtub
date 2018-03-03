@@ -1,0 +1,14 @@
+{
+  "*": { "make": "mocha" },
+  "commands/*.js": {
+    "type": "command",
+    "alternate": "spec/commands/{}_spec.js",
+    "template": [
+      "var assert = require('assert');",
+      "",
+      "describe({}Command, function() {",
+      "})",
+      ""
+    ]
+  }
+}

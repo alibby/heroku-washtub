@@ -1,0 +1,15 @@
+{
+  "name": "heroku-washtub",
+  "version": "0.0.1",
+  "description": "Wash your production data for development use with Washtub!",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "co": "^4.6.0",
+    "heroku-cli-addons": "^1.2.26",
+    "heroku-cli-util": "^8.0.0",
+    "heroku-pg": "^2.9.0",
+    "lodash": "^4.17.5",
+    "mocha": "^5.0.1"
+  }
+}
