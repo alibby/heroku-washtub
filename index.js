@@ -1,4 +1,5 @@
 exports.commands = [
+  require('./commands/washtub/init'),
   require('./commands/washtub/dump')
 ]
 
