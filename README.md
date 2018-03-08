@@ -7,6 +7,21 @@ This is the heroku washtub command line plugin.
 NOTE: So far this only documents how to get setup for executing
 ```heroku washtub:init``
 
+## Clone and link
+
+```
+git clone git@github.com:alibby/heroku-washtub
+heorku plugins:link
+```
+Once this is complete, running ```heroku plugins``` should list heroku-washtub
+along with the location where you cloned it.
+
+## Environment
+
+```
+export WASHTUB_URL=http://localhost:4567
+```
+
 ## Create Accounts
 
 Over in washtub core, make sure you've run ```kensa test```.  This will
