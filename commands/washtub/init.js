@@ -3,11 +3,21 @@
 let co = require('co');
 let cli = require('heroku-cli-util');
 let _ = require('lodash')
-let http = require('http')
 let querystring = require('querystring')
 
-function create_washtub_db(addon_info, db_url, auth_token) {
 
+function get_washtub_url() {
+  let { URL } = require('url')
+  return new URL(process.env.WASHTUB_URL || 'https://washtub-core-production.herokuapp.com/')
+}
+
+function get_http() {
+  let { URL } = require('url')
+  let url = get_washtub_url()
+  return require(url.protocol.replace(':',''))
+}
+
+function create_washtub_db(addon_info, db_url, auth_token) {
   return new Promise((resolve, reject) => {
     let post_body = JSON.stringify({
       auth_token: auth_token,
@@ -15,10 +25,12 @@ function create_washtub_db(addon_info, db_url, auth_token) {
       connect_url: db_url,
     })
 
+    let washtub_url = get_washtub_url()
+
     let options = {
       method: 'POST',
-      hostname: 'localhost',
-      port: 4567,
+      hostname: washtub_url.hostname,
+      port: washtub_url.port,
       path: '/api/v1/databases',
       headers: {
         'Content-Type': 'application/json',
@@ -27,6 +39,7 @@ function create_washtub_db(addon_info, db_url, auth_token) {
     }
 
     let data = ''
+    let http = get_http()
 
     let req = http.request(options, (res) => {
       res.on('data', (chunk) => { data += chunk })
@@ -45,7 +58,7 @@ function create_washtub_db(addon_info, db_url, auth_token) {
 }
 
 function * run(context, heroku) {
-  let source = context.args.database
+  let source = context.args.database || 'DATABASE_URL'
   let app = context.flags.app || process.env.HEROKU_APP
 
   let addons = yield heroku.get(`/apps/${app}/addons`)
@@ -72,7 +85,7 @@ module.exports = {
   needsAuth: true,
 
   args: [
-    {name: 'database', optional: false, description: 'The database to add to Washtub'}
+    {name: 'database', optional: true, description: 'The database to add to Washtub, defaults to DATABASE_URL'}
   ],
 
   flags: [
