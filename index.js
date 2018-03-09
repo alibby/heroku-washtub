@@ -1,6 +1,7 @@
 exports.commands = [
   require('./commands/washtub/init'),
-  require('./commands/washtub/dump')
+  require('./commands/washtub/dump'),
+  require('./commands/washtub/wash')
 ]
 
 exports.topic = {

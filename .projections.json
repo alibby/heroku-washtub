@@ -4,13 +4,22 @@
     "type": "command",
     "alternate": "spec/commands/{}_spec.js"
   },
+  "lib/*.js": {
+    "type": "lib",
+    "alternate": "spec/lib/{}_spec.js",
+    "template": [
+      "'use strict'",
+      "",
+      "module.epxorts = '...'"
+    ]
+  },
   "spec/*.js": {
     "type": "spec",
     "alternate": "{}.js",
     "template": [
-      "var assert = require('assert');",
+      "let assert = require('assert')",
       "",
-      "describe({}Command, function() {",
+      "describe('{}', function() {",
       "})",
       ""
     ]
