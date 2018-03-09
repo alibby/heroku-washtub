@@ -1,6 +1,5 @@
-let {expect} = require('chai')
-let assert = require('assert')
-let {Washtub, WashtubDatabase} = require('../../lib/washtub')
+let { expect } = require('chai')
+let { Washtub, WashtubDatabase, WashtubWash } = require('../../lib/washtub')
 
 let hostname = "sometesturl.com"
 let url = `https://${hostname}`
@@ -81,13 +80,16 @@ describe('WashtubDatabase', function() {
       console.dir(washtub_db.create({addon: 'info'}, 'someurl'))
     })
   })
+})
 
-  describe('#wash', function() {
+
+describe('WashtubWash', function() {
+  describe('#create', function() {
     let body = JSON.stringify('12345678')
-    let washtub_db = new WashtubDatabase({auth_token: token}, body)
+    let washtub_db = new WashtubWash({auth_token: token}, body)
 
     it('should return a promise', function() {
-      console.dir(washtub_db.wash('b004'))
+      console.dir(washtub_db.create('b004'))
     })
   })
 })
