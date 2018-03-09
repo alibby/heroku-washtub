@@ -22,7 +22,7 @@ function * run(context, heroku) {
 
   let wash_client = new WashtubWash({ auth_token: config.WASHTUB_TOKEN })
 
-  let x = yield wash_client.create(backup, url.url)
+  let x = yield wash_client.create(backup, url)
   console.log(x)
 }
 
