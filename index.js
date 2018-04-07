@@ -1,5 +1,6 @@
 exports.commands = [
   require('./commands/washtub/init'),
+  require('./commands/washtub/list'),
   require('./commands/washtub/wash')
 ]
 
