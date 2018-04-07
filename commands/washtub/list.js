@@ -14,14 +14,14 @@ function * run(context, heroku) {
 
 
   let data = _.map(washes, function(wash) {
-    return { id: wash.id, state: (wash.wash_s3_key ? 'complete' : 'washing') }
+    return { wid: wash.wid, state: (wash.wash_s3_key ? 'complete' : 'washing') }
   })
 
   cli.styledHeader("Washes")
 
   cli.table(data, {
     columns: [
-      { key: 'id', label: 'wash' },
+      { key: 'wid', label: 'wash' },
       { key: 'state', label: 'state' }
     ]
   })
