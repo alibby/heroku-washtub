@@ -14,11 +14,14 @@ function * run(context, heroku) {
 
   if( ! db_addon ) throw new Error(`Cannot find DB addon '${source}'`)
 
+  console.log(`Initializing washtub for your database ${source}`)
+
   let configs = yield heroku.get(`/apps/${app}/config-vars`)
   let washtub_db_client = new WashtubDatabase({ auth_token: configs.WASHTUB_TOKEN })
   let result = yield washtub_db_client.create(db_addon, configs.source)
+  let wid = result.data
 
-  console.log(result)
+  console.log('Done.')
 }
 
 module.exports = {
