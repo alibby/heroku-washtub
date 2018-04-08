@@ -5,7 +5,7 @@ let co = require('co')
 let http = require('https')
 let wait = require('co-wait')
 let { WashtubWash } = require('../../lib/washtub')
-let { ensure_app } = require('../../lib/cli-util')
+let { ensure_app, ensure_token } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
   let backupid = context.args.backup
@@ -23,7 +23,8 @@ function * run(context, heroku) {
   let url_body = `/client/v11/apps/${app}/transfers/${bid}/actions/public-url`
   let url = yield heroku.post(url_body, options)
 
-  let wash_client = new WashtubWash({ auth_token: config.WASHTUB_TOKEN })
+  let token = ensure_token(config, app)
+  let wash_client = new WashtubWash({ auth_token: token })
 
   let x = yield wash_client.create(backup, url)
   let wash_id = x.data.wid
