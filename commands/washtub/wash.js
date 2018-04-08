@@ -25,23 +25,25 @@ function * run(context, heroku) {
   let wash_client = new WashtubWash({ auth_token: config.WASHTUB_TOKEN })
 
   let x = yield wash_client.create(backup, url)
-  let wash_id = x.data.id
+  let wash_id = x.data.wid
   let stat = yield wash_client.status(wash_id)
 
-  cli.action.start("Waiting for wash to complete")
+  cli.action.start("Wash status: ")
+
+  cli.action.status("washing...")
+
   while(stat.data != 'complete') {
-    cli.action.status("Waiting for wash to complete")
     yield wait(5000)
     stat = yield wash_client.status(wash_id)
   }
 
-  cli.action.done("Waiting for wash to complete")
-
   let download_url = (yield wash_client.download_url(wash_id)).data
-  console.log(download_url)
+  let database = context.args.target
+
+  cli.action.status(`loading data into ${database}`)
 
   let req = http.get(download_url, (res) => {
-    let pgrestore = require('../../lib/pgrestore')(context.args.target)
+    let pgrestore = require('../../lib/pgrestore')(database)
 
     res.on('data', (data) => {
       pgrestore.stdin.write(data)
@@ -52,6 +54,8 @@ function * run(context, heroku) {
     })
   })
   req.end()
+
+  cli.action.done("Wash complete!")
 }
 
 
@@ -61,7 +65,7 @@ module.exports = {
   description: "Create and wash a database from the given backup id",
   help: `Examples:
 
-  $ heroku washtub:wash backup database
+  $ heroku washtub:wash backup target
   `,
 
   needsAuth: true,

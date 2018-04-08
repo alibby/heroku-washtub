@@ -25,6 +25,7 @@ function * run(context, heroku) {
       { key: 'state', label: 'state' }
     ]
   })
+  console.log()
 }
 
 module.exports = {
