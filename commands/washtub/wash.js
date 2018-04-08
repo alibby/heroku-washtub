@@ -25,7 +25,7 @@ function * run(context, heroku) {
   let wash_client = new WashtubWash({ auth_token: config.WASHTUB_TOKEN })
 
   let x = yield wash_client.create(backup, url)
-  let wash_id = x.data.id
+  let wash_id = x.data.wid
   let stat = yield wash_client.status(wash_id)
 
   cli.action.start("Wash status: ")
