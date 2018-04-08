@@ -10,7 +10,7 @@
     "template": [
       "'use strict'",
       "",
-      "module.epxorts = '...'"
+      "module.exports = '...'"
     ]
   },
   "spec/*.js": {
