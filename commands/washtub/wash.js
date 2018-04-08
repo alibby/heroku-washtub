@@ -5,6 +5,7 @@ let co = require('co')
 let http = require('https')
 let wait = require('co-wait')
 let { WashtubWash } = require('../../lib/washtub')
+let { ensure_app } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
   let backupid = context.args.backup
@@ -14,7 +15,7 @@ function * run(context, heroku) {
   }
 
   let bid = backupid.replace('b', '')
-  let app = context.flags.app || process.env.HEROKU_APP
+  let app = ensure_app(context)
   let config = yield heroku.get(`/apps/${app}/config-vars`)
   let path = `/client/v11/apps/${app}/transfers/${bid}?verbose=false`
   let options = { host: 'https://postgres-api.heroku.com' }

@@ -4,10 +4,11 @@ let co = require('co');
 let cli = require('heroku-cli-util');
 let _ = require('lodash')
 let { WashtubDatabase } = require('../../lib/washtub')
+let { ensure_app } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
   let source = context.args.database || 'DATABASE_URL'
-  let app = context.flags.app || process.env.HEROKU_APP
+  let app = ensure_app(context)
 
   let addons = yield heroku.get(`/apps/${app}/addons`)
   let db_addon = _.find(addons, (o) => { return _.includes(o.config_vars, source) })
