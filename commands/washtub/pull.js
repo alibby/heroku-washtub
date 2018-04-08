@@ -4,9 +4,10 @@ let cli = require('heroku-cli-util')
 let co = require('co')
 let http = require('https')
 let { WashtubWash } = require('../../lib/washtub')
+let { ensure_app } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
-  let app = context.flags.app || process.env.HEROKU_APP
+  let app = ensure_app(context)
   let wash = context.args.wash
   let database = context.args.target
 

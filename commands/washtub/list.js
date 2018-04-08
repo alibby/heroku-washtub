@@ -4,9 +4,10 @@ let cli = require('heroku-cli-util')
 let co = require('co')
 let _ = require('lodash')
 let { WashtubWash } = require('../../lib/washtub')
+let { ensure_app } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
-  let app = context.flags.app || process.env.HEROKU_APP
+  let app = ensure_app(context)
   let config = yield heroku.get(`/apps/${app}/config-vars`)
   let washtub_client = new WashtubWash({ auth_token: config.WASHTUB_TOKEN })
   let response = yield washtub_client.list()
