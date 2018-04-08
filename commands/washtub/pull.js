@@ -4,7 +4,7 @@ let cli = require('heroku-cli-util')
 let co = require('co')
 let http = require('https')
 let { WashtubWash } = require('../../lib/washtub')
-let { ensure_app } = require('../../lib/cli-util')
+let { ensure_app, ensure_token } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
   let app = ensure_app(context)
@@ -12,7 +12,8 @@ function * run(context, heroku) {
   let database = context.args.target
 
   let config = yield heroku.get(`/apps/${app}/config-vars`)
-  let washtub_client = new WashtubWash({ auth_token: config.WASHTUB_TOKEN })
+  let token = ensure_token(config, app)
+  let washtub_client = new WashtubWash({ auth_token: token })
   let response = yield washtub_client.download_url(wash)
   let download_url = response.data
 

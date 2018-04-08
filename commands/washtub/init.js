@@ -4,7 +4,7 @@ let co = require('co');
 let cli = require('heroku-cli-util');
 let _ = require('lodash')
 let { WashtubDatabase } = require('../../lib/washtub')
-let { ensure_app } = require('../../lib/cli-util')
+let { ensure_app, ensure_token } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
   let source = context.args.database || 'DATABASE_URL'
@@ -18,9 +18,9 @@ function * run(context, heroku) {
   console.log(`Initializing washtub for your database ${source}`)
 
   let configs = yield heroku.get(`/apps/${app}/config-vars`)
-  let washtub_db_client = new WashtubDatabase({ auth_token: configs.WASHTUB_TOKEN })
+  let token = ensure_token(configs, app)
+  let washtub_db_client = new WashtubDatabase({ auth_token: token })
   let result = yield washtub_db_client.create(db_addon, configs[source])
-  let wid = result.data
 
   console.log('Done.')
 }
