@@ -19,7 +19,7 @@ function * run(context, heroku) {
 
   let configs = yield heroku.get(`/apps/${app}/config-vars`)
   let washtub_db_client = new WashtubDatabase({ auth_token: configs.WASHTUB_TOKEN })
-  let result = yield washtub_db_client.create(db_addon, configs.source)
+  let result = yield washtub_db_client.create(db_addon, configs[source])
   let wid = result.data
 
   console.log('Done.')
