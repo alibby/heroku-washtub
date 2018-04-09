@@ -49,14 +49,11 @@ module.exports = {
   `,
 
   needsAuth: true,
+  needsApp: true,
 
   args: [
     { name: 'wash', optional: false, description: 'The wash number of the wash to pull' },
     { name: 'target', optional: false, description: 'The target DB to load washed data into' }
-  ],
-
-  flags: [
-    { name: 'app', char: 'a', hasValue: true, description: 'the Heroku app to use' },
   ],
 
   run: cli.command(co.wrap(run))

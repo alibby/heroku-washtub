@@ -9,7 +9,6 @@ let { ensure_app, ensure_token } = require('../../lib/cli-util')
 function * run(context, heroku) {
   let source = context.args.database || 'DATABASE_URL'
   let app = ensure_app(context)
-
   let addons = yield heroku.get(`/apps/${app}/addons`)
   let db_addon = _.find(addons, (o) => { return _.includes(o.config_vars, source) })
 
@@ -35,13 +34,10 @@ module.exports = {
   `,
 
   needsAuth: true,
+  needsApp: true,
 
   args: [
     {name: 'database', optional: true, description: 'The database to add to Washtub, defaults to DATABASE_URL'}
-  ],
-
-  flags: [
-    {name: 'app', char: 'a', hasValue: true, description: 'the Heroku app to use'},
   ],
 
   run: cli.command(co.wrap(run))
