@@ -71,14 +71,11 @@ module.exports = {
   `,
 
   needsAuth: true,
+  needsApp: true,
 
   args: [
     { name: 'backup', optional: false, description: 'The bakcup_id of a backup to load and wash' },
     { name: 'target', optional: false, description: 'The target DB to load washed data into' }
-  ],
-
-  flags: [
-    { name: 'app', char: 'a', hasValue: true, description: 'the Heroku app to use' },
   ],
 
   run: cli.command(co.wrap(run))

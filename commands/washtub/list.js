@@ -39,10 +39,7 @@ module.exports = {
   `,
 
   needsAuth: true,
-
-  flags: [
-    { name: 'app', char: 'a', hasValue: true, description: 'the Heroku app to use' },
-  ],
+  needsApp: true,
 
   run: cli.command(co.wrap(run))
 }
