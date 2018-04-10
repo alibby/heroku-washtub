@@ -2,8 +2,7 @@
 
 let cli = require('heroku-cli-util')
 let co = require('co')
-let http = require('https')
-let { WashtubWash } = require('../../lib/washtub')
+let { WashtubWash, load_wash } = require('../../lib/washtub')
 let { ensure_app, ensure_token } = require('../../lib/cli-util')
 
 function * run(context, heroku) {
@@ -17,26 +16,7 @@ function * run(context, heroku) {
   let response = yield washtub_client.download_url(wash)
   let download_url = response.data
 
-  console.log(`Pulling wash ${wash} into ${database}`)
-
-  cli.action.start("Pulling wash")
-
-  cli.action.status("working")
-
-  let req = http.get(download_url, (res) => {
-    let pgrestore = require('../../lib/pgrestore')(database)
-
-    res.on('data', (data) => {
-      pgrestore.stdin.write(data)
-    })
-
-    res.on('end', () => {
-      pgrestore.stdin.end()
-    })
-  })
-
-  cli.action.done("Done!")
-  console.log()
+  load_wash(download_url, database)
 }
 
 module.exports = {
