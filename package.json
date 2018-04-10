@@ -1,9 +1,14 @@
 {
   "name": "heroku-washtub",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Clean your production data for development use with Washtub!",
+  "keywords": "data anonymization privacy compliance",
   "main": "index.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibby/heroku-washtub"
+  },
   "dependencies": {
     "chai": "^4.1.2",
     "co": "^4.6.0",
