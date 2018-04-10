@@ -10,7 +10,7 @@ let { ensure_app, ensure_token } = require('../../lib/cli-util')
 function * run(context, heroku) {
   let backupid = context.args.backup
 
-  if(! backupid.match(/^b\d+$/)) {
+  if(! backupid.match(/^[a-z]+\d+$/)) {
     throw new Error(`Please specify backup id.  ${backupid} does not seem to be a valid backup`)
   }
 
