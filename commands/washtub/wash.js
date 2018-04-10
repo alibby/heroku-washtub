@@ -66,7 +66,7 @@ module.exports = {
   needsApp: true,
 
   args: [
-    { name: 'backup', optional: false, description: 'The bakcup_id of a backup to load and wash' },
+    { name: 'backup', optional: false, description: 'The backup_id of a backup to load and wash' },
     { name: 'target', optional: false, description: 'The target DB to load washed data into' }
   ],
 
