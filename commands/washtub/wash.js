@@ -14,7 +14,7 @@ function * run(context, heroku) {
     throw new Error(`Please specify backup id.  ${backupid} does not seem to be a valid backup`)
   }
 
-  let bid = backupid.replace('b', '')
+  let bid = backupid.replace(/^[a-z]+/, '')
   let app = ensure_app(context)
 
   co(function *() {
