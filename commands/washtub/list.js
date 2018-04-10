@@ -11,22 +11,28 @@ function * run(context, heroku) {
   let config = yield heroku.get(`/apps/${app}/config-vars`)
   let token = ensure_token(config, app)
   let washtub_client = new WashtubWash({ auth_token: token })
-  let response = yield washtub_client.list()
-  let washes = response.data
 
-  let data = _.map(washes, function(wash) {
-    return { wid: wash.wid, state: (wash.wash_s3_key ? 'complete' : 'washing') }
+  co(function *() {
+    let response = yield washtub_client.list()
+    let washes = response.data
+
+    let data = _.map(washes, function(wash) {
+      return { wid: wash.wid, state: (wash.wash_s3_key ? 'complete' : 'washing') }
+    })
+
+    cli.styledHeader("Washes")
+
+    cli.table(data, {
+      columns: [
+        { key: 'wid', label: 'wash' },
+        { key: 'state', label: 'state' }
+      ]
+    })
+    console.log()
+  }).catch( (error) => {
+    cli.error(`There was a problem retriving your wash list: ${error.message}`)
+    cli.exit(1)
   })
-
-  cli.styledHeader("Washes")
-
-  cli.table(data, {
-    columns: [
-      { key: 'wid', label: 'wash' },
-      { key: 'state', label: 'state' }
-    ]
-  })
-  console.log()
 }
 
 module.exports = {
