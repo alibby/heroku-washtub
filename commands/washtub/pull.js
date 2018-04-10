@@ -16,6 +16,7 @@ function * run(context, heroku) {
   let response = yield washtub_client.download_url(wash)
   let download_url = response.data
 
+  cli.action.start(`Pulling into database ${database}`)
   load_wash(download_url, database)
 }
 
