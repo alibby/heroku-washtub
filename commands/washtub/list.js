@@ -30,7 +30,7 @@ function * run(context, heroku) {
     })
     console.log()
   }).catch( (error) => {
-    cli.error(`There was a problem retriving your wash list: ${error.message}`)
+    cli.error(`There was a problem retrieving your wash list: ${error.message}`)
     cli.exit(1)
   })
 }
