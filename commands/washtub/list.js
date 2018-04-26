@@ -17,7 +17,12 @@ function * run(context, heroku) {
     let washes = response.data
 
     let data = _.map(washes, function(wash) {
-      return { wid: wash.wid, state: (wash.wash_s3_key ? 'complete' : 'washing') }
+      return {
+        wid: wash.wid,
+        state: wash.completed_at ? 'complete' : 'incomplete',
+        started_at: wash.started_at ? new Date(wash.started_at).toLocaleString() : '',
+        completed_at: wash.completed_at ? new Date(wash.completed_at).toLocaleString() : ''
+      }
     })
 
     cli.styledHeader("Washes")
@@ -25,7 +30,9 @@ function * run(context, heroku) {
     cli.table(data, {
       columns: [
         { key: 'wid', label: 'wash' },
-        { key: 'state', label: 'state' }
+        { key: 'state', label: 'state' },
+        { key: 'started_at', label: 'started' },
+        { key: 'completed_at', label: 'completed' }
       ]
     })
     console.log()
