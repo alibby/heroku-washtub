@@ -1,6 +1,6 @@
 {
   "name": "heroku-washtub",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Clean your production data for development use with Washtub!",
   "keywords": "data anonymization privacy compliance",
   "main": "index.js",
