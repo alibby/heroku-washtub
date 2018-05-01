@@ -14,10 +14,14 @@ function * run(context, heroku) {
   let token = ensure_token(config, app)
   let washtub_client = new WashtubWash({ auth_token: token })
   let response = yield washtub_client.download_url(wash)
-  let download_url = response.data
+  if(response.status == 'ok') {
+    let download_url = response.data
 
-  cli.action.start(`Pulling into database ${database}`)
-  load_wash(download_url, database)
+    cli.action.start(`Pulling into database ${database}`)
+    load_wash(download_url, database)
+  } else {
+    cli.error(`There was a problem pulling your wash: ${response.data}`)
+  }
 }
 
 module.exports = {
