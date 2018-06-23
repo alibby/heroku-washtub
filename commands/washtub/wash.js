@@ -63,10 +63,10 @@ function * run(context, heroku) {
 module.exports = {
   topic: 'washtub',
   command: 'wash',
-  description: "Create and wash a database from the given backup id",
+  description: "Create and wash a given remote database to a given local database",
   help: `Examples:
 
-  $ heroku washtub:wash backup target
+  $ heroku washtub:wash REMOTE_DATABASE_NAME local_db_name
   `,
 
   needsAuth: true,
